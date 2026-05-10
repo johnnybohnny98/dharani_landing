@@ -66,24 +66,25 @@ nav {
 }
 
 .nav-logo {
-  font-size: 14px;
-  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-logo-main {
+  font-size: 18px;
+  font-weight: 800;
   color: var(--ink);
   letter-spacing: 0.02em;
-  text-decoration: none;
+  line-height: 1.2;
 }
-.nav-logo span { color: var(--ochre); }
-
-.nav-dl {
-  font-size: 13px;
+.nav-logo-sub {
+  font-size: 11px;
+  font-weight: 700;
   color: var(--ochre);
-  text-decoration: none;
-  border-bottom: 1px solid var(--ochre);
-  padding-bottom: 1px;
-  letter-spacing: 0.08em;
-  transition: color 0.2s;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
 }
-.nav-dl:hover { color: var(--ochre-l); border-color: var(--ochre-l); }
 
 /* ─── SECTIONS BASE ──────────────────────────────── */
 section {
@@ -396,8 +397,10 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">다라니 <span>— AI 불교 수행 &amp; 마음공부 챗 벗(友)</span></a>
-  <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EB%9D%BC%EB%8B%88-ai-%EB%B6%88%EA%B5%90-%EC%88%98%ED%96%89-%EB%A7%88%EC%9D%8C%EA%B3%B5%EB%B6%80-%EC%B1%97-%EB%B2%97/id6760872720" class="nav-dl" target="_blank">앱 내려받기</a>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-main">다라니</span>
+    <span class="nav-logo-sub">— AI 불교 수행 &amp; 마음공부 챗 벗(友)</span>
+  </a>
 </nav>
 
 <!-- §1 HERO -->
