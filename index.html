@@ -79,16 +79,25 @@ a:focus-visible, button:focus-visible {
   z-index: 101;
   background: #1E160D;
   text-align: center;
-  padding: 11px 20px;
+  padding: 14px 20px 15px;
 }
-.dday-strip a {
-  color: #E7C48A;
-  text-decoration: none;
-  font-size: 13.5px;
+.dday-strip a { text-decoration: none; display: inline-block; }
+.dday-l1 {
+  display: block;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.22em;
+  color: rgba(231,196,138,0.72);
+  margin-bottom: 4px;
 }
-.dday-strip a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.dday-l2 {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #F0D5A6;
+}
+.dday-strip a:hover .dday-l2 { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ─── NAV — 히어로 위에선 투명, 지나면 한지 유리 ── */
 nav {
@@ -537,7 +546,10 @@ footer {
 
 <!-- ═══ [A] D-DAY 스트립 — 날짜에 맞춰 자동 갱신, 수능 뒤엔 자동 숨김 ═══ -->
 <div class="dday-strip" id="dday-strip">
-  <a href="#prayer"><span id="dday-text">2026년 8월 11일, 수능 D-100 — 백일 마음기도가 시작됩니다</span> →</a>
+  <a href="#prayer">
+    <span class="dday-l1" id="dday-l1">2026년 8월 11일, 수능 D-100</span>
+    <span class="dday-l2" id="dday-l2">백일 마음기도가 시작됩니다 →</span>
+  </a>
 </div>
 
 <nav id="nav">
@@ -798,9 +810,10 @@ footer {
 
 /* D-day 스트립 — KST 기준으로 시즌 전·중·수능일·이후를 자동 전환 */
 (function () {
-  var el = document.getElementById('dday-text');
+  var l1 = document.getElementById('dday-l1');
+  var l2 = document.getElementById('dday-l2');
   var strip = document.getElementById('dday-strip');
-  if (!el || !strip) return;
+  if (!l1 || !l2 || !strip) return;
   var now = new Date();
   var kst = new Date(now.getTime() + (now.getTimezoneOffset() + 540) * 60000);
   var today = new Date(kst.getFullYear(), kst.getMonth(), kst.getDate());
@@ -808,11 +821,14 @@ footer {
   var exam  = new Date(2026, 10, 19);  // 2026-11-19
   var d = Math.round((exam - today) / 86400000);
   if (today < start) {
-    el.textContent = '2026년 8월 11일, 수능 D-100 — 백일 마음기도가 시작됩니다';
+    l1.textContent = '2026년 8월 11일, 수능 D-100';
+    l2.textContent = '백일 마음기도가 시작됩니다 →';
   } else if (d > 0) {
-    el.textContent = '수능 D-' + d + ' — 백일 마음기도가 이어지고 있습니다';
+    l1.textContent = '2026년 수능 D-' + d;
+    l2.textContent = '백일 마음기도가 이어지고 있습니다 →';
   } else if (d === 0) {
-    el.textContent = '오늘은 수능일입니다 — 백 일의 마지막까지 함께합니다';
+    l1.textContent = '2026년 11월 19일, 수능일';
+    l2.textContent = '백 일의 마지막까지 함께합니다';
   } else {
     strip.style.display = 'none';
   }
