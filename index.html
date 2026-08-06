@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js');</script>
+<script defer src="/_vercel/insights/script.js"></script>
 <style>
 
 /* ─── TOKENS ─────────────────────────────────────── */
@@ -806,6 +807,49 @@ footer {
   }
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+
+/* ─── 유입 추적 ───────────────────────────────────
+   ①방문 채널(ref/campaign)을 읽고
+   ②구글 플레이 링크에 referrer로 실어 보낸다 → 설치 후 앱까지 전달됨
+   ③스토어 버튼 클릭을 이벤트로 남긴다
+   예) /?ref=youtube&campaign=shorts1                                  */
+(function () {
+  var q, ref, campaign;
+  try {
+    q = new URLSearchParams(window.location.search);
+    ref = (q.get('ref') || 'direct').slice(0, 40);
+    campaign = (q.get('campaign') || 'none').slice(0, 60);
+  } catch (e) { ref = 'direct'; campaign = 'none'; }
+
+  var utm = 'utm_source=' + ref + '&utm_medium=landing&utm_campaign=' + campaign;
+
+  var links = document.querySelectorAll('a[href*="play.google.com"], a[href*="apps.apple.com"]');
+  Array.prototype.forEach.call(links, function (a) {
+    var href = a.getAttribute('href') || '';
+    var isPlay = href.indexOf('play.google.com') !== -1;
+
+    /* 구글 플레이: referrer 파라미터는 설치 후 앱의 Install Referrer로 그대로 전달된다 */
+    if (isPlay && href.indexOf('referrer=') === -1) {
+      a.setAttribute('href', href + '&referrer=' + encodeURIComponent(utm));
+    }
+    /* 애플: ct(캠페인 토큰). App Store Connect에 표시되는지는 확인 필요 */
+    if (!isPlay && href.indexOf('ct=') === -1) {
+      a.setAttribute('href', href + (href.indexOf('?') === -1 ? '?' : '&') +
+        'ct=' + encodeURIComponent(campaign) + '&mt=8');
+    }
+
+    a.addEventListener('click', function () {
+      try {
+        if (window.va) {
+          window.va('event', {
+            name: 'store_click',
+            data: { store: isPlay ? 'play' : 'appstore', ref: ref, campaign: campaign }
+          });
+        }
+      } catch (e) {}
+    });
+  });
 })();
 
 /* D-day 스트립 — KST 기준으로 시즌 전·중·수능일·이후를 자동 전환 */
