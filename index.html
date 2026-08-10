@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>다라니 — 수능 백일 마음기도, 부모의 마음을 돌보는 앱</title>
-<meta name="description" content="수능 D-100인 8월 11일부터 수능일까지 백 일. 매일 아침 한 문장으로 부모의 마음을 함께 걷습니다. 첫 7일 무료 · 자동 갱신 없음.">
+<meta name="description" content="아이가 쓰는 앱이 아니라 부모가 쓰는 앱입니다. 수능 D-100인 8월 11일부터 수능일까지 백 일. 매일 아침 한 문장으로 부모의 마음을 함께 걷습니다. 첫 7일 무료 · 자동 결제 없음.">
 <meta name="theme-color" content="#16110C">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dharani-landing-tlxw.vercel.app/">
@@ -261,9 +261,23 @@ section {
   font-size: clamp(34px, 6.6vw, 68px);
   font-weight: 800;
   line-height: 1.3;
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 .hero-title em { font-style: normal; color: var(--amber); }
+
+/* ⬛ 누가 쓰는 앱인지 — 오해가 가장 많이 생기는 지점 */
+.hero-clarify {
+  font-size: clamp(15.5px, 2.1vw, 19px);
+  font-weight: 700;
+  line-height: 1.85;
+  color: var(--cream);
+  letter-spacing: 0.01em;
+  padding-left: 16px;
+  border-left: 2px solid var(--amber);
+  margin-bottom: 26px;
+}
+.hero-clarify em { font-style: normal; color: var(--amber); }
+
 .hero-body {
   font-size: clamp(16.5px, 2.2vw, 21px);
   color: var(--amber-dim);
@@ -420,6 +434,59 @@ section {
   line-height: 1.9;
 }
 
+/* ─── [G-2] 값 — 가격·안심·비교 기준 ────────────── */
+.price-box {
+  max-width: 580px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.42);
+  padding: clamp(30px, 5vw, 46px);
+}
+.price-main {
+  font-size: clamp(24px, 3.6vw, 34px);
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+.price-main strong { color: var(--ochre); }
+.price-day {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  margin-bottom: 26px;
+}
+.price-assure {
+  list-style: none;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+  margin-bottom: 24px;
+}
+.price-assure li {
+  font-size: clamp(15px, 1.9vw, 17.5px);
+  font-weight: 700;
+  color: var(--ink-mid);
+  line-height: 2.1;
+  padding-left: 22px;
+  position: relative;
+}
+.price-assure li::before {
+  content: '·';
+  position: absolute;
+  left: 6px;
+  color: var(--ochre);
+  font-weight: 800;
+}
+.price-anchor {
+  font-size: 13.5px;
+  color: var(--ink-dim);
+  line-height: 2;
+  letter-spacing: 0.02em;
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.price-anchor strong { color: var(--ochre); font-weight: 700; }
+
 /* ─── [H] 최종 CTA ──────────────────────────────── */
 .final { text-align: center; }
 .final-title {
@@ -564,6 +631,7 @@ footer {
 <!-- ═══ [B] HERO — 밤 ═══
      11/20 이후 통년판 원복 시:
      eyebrow 삭제 / 제목 "마음이 무거울 때, <em>경전에 기대어</em>" /
+     hero-clarify 삭제 /
      본문 "절에 가기 어려운 날에도, 언제 어디서나 불교의 가르침으로 마음을 다스려 보세요." /
      hero-note 삭제, 스트립 삭제 -->
 <section class="hero" id="top">
@@ -582,13 +650,18 @@ footer {
       <em>아이만이 아닙니다</em>
     </h1>
 
-    <p class="hero-body rise" style="--d:.6s">
+    <p class="hero-clarify rise" style="--d:.55s">
+      아이가 쓰는 앱이 아닙니다.<br>
+      <em>부모가 쓰는 앱</em>입니다.
+    </p>
+
+    <p class="hero-body rise" style="--d:.7s">
       수능 D-100부터 수능일까지 백 일.<br>
       매일 아침 한 문장으로,<br>
       부모의 마음을 함께 걷습니다.
     </p>
 
-    <div class="hero-cta rise" style="--d:.8s">
+    <div class="hero-cta rise" style="--d:.85s">
       <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EB%9D%BC%EB%8B%88-ai-%EB%B6%88%EA%B5%90-%EC%88%98%ED%96%89-%EB%A7%88%EC%9D%8C%EA%B3%B5%EB%B6%80-%EC%B1%97-%EB%B2%97/id6760872720" class="btn btn-cream" target="_blank" rel="noopener noreferrer">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         App Store
@@ -599,7 +672,7 @@ footer {
       </a>
     </div>
 
-    <p class="hero-note rise" style="--d:.95s">첫 7일 무료 · 8월 11일 시작 · 이후 19,900원 · 자동 갱신 없음</p>
+    <p class="hero-note rise" style="--d:1s">첫 7일 무료 · 이후 19,900원 · 자동 결제 없음 · 백 일 뒤 종료</p>
   </div>
 </section>
 
@@ -738,13 +811,36 @@ footer {
 
 <div class="rule"></div>
 
+<!-- [G-2] 값 — 11/20 이후 이 섹션 제거 -->
+<section id="price">
+  <div class="wrap">
+    <p class="label reveal">값</p>
+    <div class="price-box reveal">
+      <p class="price-main">백 일에 <strong>19,900원</strong></p>
+      <p class="price-day">하루 199원</p>
+
+      <ul class="price-assure">
+        <li>첫 7일은 무료로 써보고 결정합니다</li>
+        <li>자동 결제가 없습니다</li>
+        <li>백 일이 지나면 그대로 끝납니다</li>
+      </ul>
+
+      <p class="price-anchor">
+        절에서 하는 백일기도의 동참금은 보통 <strong>십만 원 안팎</strong>입니다.<br>
+        다라니는 그 자리를 대신하지 않습니다.
+        절에 가지 못하는 날을 함께 걷는 쪽입니다.
+      </p>
+    </div>
+  </div>
+</section>
+
 <!-- [H] 최종 CTA -->
 <section class="final" id="download">
   <div class="wrap">
     <h2 class="final-title reveal">
       오늘, 마음에<br>연등 하나 밝혀보세요.
     </h2>
-    <p class="final-sub reveal">수능 백일 마음기도 · 8월 11일 시작 · 첫 7일 무료</p>
+    <p class="final-sub reveal">수능 백일 마음기도 · 첫 7일 무료 · 자동 결제 없음</p>
 
     <div class="store-stack reveal">
       <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EB%9D%BC%EB%8B%88-ai-%EB%B6%88%EA%B5%90-%EC%88%98%ED%96%89-%EB%A7%88%EC%9D%8C%EA%B3%B5%EB%B6%80-%EC%B1%97-%EB%B2%97/id6760872720" class="store-btn" target="_blank" rel="noopener noreferrer">
