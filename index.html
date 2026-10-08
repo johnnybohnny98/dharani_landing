@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>다라니 — 수능 백일 마음기도, 부모의 마음을 돌보는 앱</title>
-<meta name="description" content="아이가 쓰는 앱이 아니라 부모가 쓰는 앱입니다. 수능 D-100인 8월 11일부터 수능일까지 백 일. 매일 아침 한 문장으로 부모의 마음을 함께 걷습니다. 첫 7일 무료 · 자동 결제 없음.">
+<title>다라니 — 불교 수행 &amp; 마음공부 도반</title>
+<meta name="description" content="마음이 무거울 때, 경전에 기대어. 경전 해설을 듣고, 마음을 털어놓고, 매일의 수행을 기록하는 불교 마음공부 앱 다라니입니다.">
 <meta name="theme-color" content="#16110C">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dharani-landing-tlxw.vercel.app/">
-<meta property="og:title" content="다라니 — 수능 백일 마음기도">
-<meta property="og:description" content="수능을 준비하는 건 아이만이 아닙니다. 8월 11일(D-100)부터 수능일까지, 매일 아침 한 문장으로 부모의 마음을 함께 걷습니다.">
+<meta property="og:title" content="다라니 — 마음이 무거울 때, 경전에 기대어">
+<meta property="og:description" content="절에 가기 어려운 날에도, 언제 어디서나 불교의 가르침으로 마음을 다스려 보세요.">
 <meta property="og:image" content="https://dharani-landing-tlxw.vercel.app/icon.png">
-<link rel="icon" href="https://dharani-landing-tlxw.vercel.app/icon.png">
+<link rel="icon" href="/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
@@ -29,13 +29,15 @@
   --ochre:   #6B4E10;
   --ochre-l: #8B6820;
   --line:    rgba(28,25,20,0.15);
-  /* 캠페인 다크(공지 이미지·유튜브와 같은 세계) */
+  /* 다크(히어로·송년 기도 — 유튜브·공지 이미지와 같은 세계) */
   --night:   #16110C;
   --night-2: #2A1F13;
   --cream:   #F5EFE3;
   --amber:   #D9A45B;
   --amber-dim: rgba(231,196,138,0.72);
   --line-dark: rgba(245,239,227,0.16);
+  /* 내비 높이 — 히어로가 이만큼 내비 밑으로 들어간다 */
+  --nav-h:   80px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,6 +51,8 @@ body {
   font-weight: 400;            /* 본문 400 — 위계는 굵기 차이로 */
   line-height: 1.95;
   overflow-x: hidden;
+  word-break: keep-all;        /* 한글은 낱말(띄어쓰기) 단위로 줄바꿈 */
+  overflow-wrap: break-word;
 }
 
 ::selection { background: var(--ochre); color: var(--hanji); }
@@ -74,38 +78,13 @@ a:focus-visible, button:focus-visible {
   user-select: none;
 }
 
-/* ─── D-DAY 스트립 (JS가 날짜에 맞춰 갱신) ───────── */
-.dday-strip {
-  position: relative;
-  z-index: 101;
-  background: #1E160D;
-  text-align: center;
-  padding: 14px 20px 15px;
-}
-.dday-strip a { text-decoration: none; display: inline-block; }
-.dday-l1 {
-  display: block;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  color: rgba(231,196,138,0.72);
-  margin-bottom: 4px;
-}
-.dday-l2 {
-  display: block;
-  font-size: 15.5px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: #F0D5A6;
-}
-.dday-strip a:hover .dday-l2 { text-decoration: underline; text-underline-offset: 4px; }
-
 /* ─── NAV — 히어로 위에선 투명, 지나면 한지 유리 ── */
 nav {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 20px 48px;
+  height: var(--nav-h);
+  padding: 0 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -147,16 +126,6 @@ section {
 }
 .wrap { max-width: 860px; margin: 0 auto; position: relative; }
 
-.rule {
-  height: 1px;
-  background: var(--line);
-  max-width: 860px;
-  width: calc(100% - 48px);
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
 .label {
   font-size: 14px;
   letter-spacing: 0.28em;
@@ -164,24 +133,9 @@ section {
   color: var(--ochre);
   margin-bottom: 22px;
 }
-.sec-title {
-  font-size: clamp(25px, 4.2vw, 38px);
-  font-weight: 800;
-  line-height: 1.45;
-  color: var(--ink);
-  margin-bottom: 30px;
-}
-.prose p {
-  max-width: 640px;
-  font-size: clamp(16px, 2vw, 19px);
-  color: var(--ink-mid);
-  line-height: 2.1;
-  margin-bottom: 22px;
-}
-.prose p:last-child { margin-bottom: 0; }
-.prose em { font-style: normal; font-weight: 700; color: var(--ochre); }
 
-/* ─── HERO — 밤. 캠페인의 먹색과 연등빛 ─────────── */
+/* ─── HERO — 밤. 먹색과 연등빛 ──────────────────── */
+/* 내비가 투명하므로 히어로를 내비 밑까지 끌어올린다(내비 글자가 어두운 바탕 위에 오도록) */
 .hero {
   background:
     radial-gradient(120% 90% at 82% 22%, rgba(224,152,64,0.16), transparent 55%),
@@ -189,9 +143,10 @@ section {
   color: var(--cream);
   overflow: hidden;
   display: grid;
-  min-height: calc(100svh - 112px);
-  padding-top: clamp(56px, 8vw, 96px);
-  padding-bottom: clamp(96px, 13vw, 150px);
+  min-height: 100svh;
+  margin-top: calc(-1 * var(--nav-h));
+  padding-top: calc(var(--nav-h) + clamp(40px, 7vw, 88px));
+  padding-bottom: clamp(88px, 12vw, 140px);
 }
 .hero .wrap {
   align-self: center;
@@ -227,19 +182,23 @@ section {
   to   { opacity: 1;    transform: translateY(-14px) scale(1.05); }
 }
 
-/* 百 — 이 페이지의 낙관 */
-.hero-baek {
+/* 낙관(큰 한자) — 히어로는 法, 송년 기도는 年
+   🔴 웹폰트(나눔명조)에 없는 한자는 다른 글꼴로 대체돼 티가 난다.
+      바꿀 때는 心·百·法·光·明·年·一·二·三 처럼 확인된 글자만 쓴다(四·燈은 없음). */
+.mark {
   position: absolute;
-  right: -3vw;
   top: 50%;
-  transform: translateY(-52%);
-  font-size: clamp(240px, 30vw, 440px);
   font-weight: 800;
   line-height: 1;
-  color: rgba(233, 182, 104, 0.055);
   pointer-events: none;
   user-select: none;
   z-index: 1;
+}
+.hero-mark {
+  right: -3vw;
+  transform: translateY(-52%);
+  font-size: clamp(240px, 30vw, 440px);
+  color: rgba(233, 182, 104, 0.055);
 }
 
 .hero-icon {
@@ -250,33 +209,13 @@ section {
   margin-bottom: 34px;
   box-shadow: 0 10px 44px rgba(226,152,64,0.28);
 }
-.hero-eyebrow {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: var(--amber);
-  margin-bottom: 22px;
-}
 .hero-title {
   font-size: clamp(34px, 6.6vw, 68px);
   font-weight: 800;
   line-height: 1.3;
-  margin-bottom: 24px;
-}
-.hero-title em { font-style: normal; color: var(--amber); }
-
-/* ⬛ 누가 쓰는 앱인지 — 오해가 가장 많이 생기는 지점 */
-.hero-clarify {
-  font-size: clamp(15.5px, 2.1vw, 19px);
-  font-weight: 700;
-  line-height: 1.85;
-  color: var(--cream);
-  letter-spacing: 0.01em;
-  padding-left: 16px;
-  border-left: 2px solid var(--amber);
   margin-bottom: 26px;
 }
-.hero-clarify em { font-style: normal; color: var(--amber); }
+.hero-title em { font-style: normal; color: var(--amber); }
 
 .hero-body {
   font-size: clamp(16.5px, 2.2vw, 21px);
@@ -314,54 +253,24 @@ section {
 }
 .btn-ghost:hover { border-color: var(--amber); color: var(--amber); transform: translateY(-2px); }
 
-.hero-note {
-  margin-top: 24px;
-  font-size: 13.5px;
-  letter-spacing: 0.05em;
-  color: rgba(245,239,227,0.6);
+/* ─── 어머니 이야기 ─────────────────────────────── */
+.story { background: var(--hanji-d); }
+.story-inner { max-width: 580px; margin: 0 auto; text-align: center; }
+.story-quote {
+  font-size: clamp(17px, 2.4vw, 21px);
+  color: var(--ink-mid);
+  line-height: 2.25;
+  margin-bottom: 38px;
 }
-
-/* ─── [C] 백일기도란 — 새벽. 한지가 시작된다 ───── */
-.tl {
-  display: flex;
-  align-items: flex-start;
-  max-width: 620px;
-  margin-top: 60px;
-}
-.tl-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  min-width: 96px;
-}
-.tl-dot {
-  width: 11px; height: 11px; border-radius: 50%;
-  background: var(--ochre);
-  box-shadow: 0 0 0 5px rgba(107,78,16,0.12);
-}
-.tl-node strong { font-size: 15px; font-weight: 800; letter-spacing: 0.03em; }
-.tl-node span   { font-size: 12.5px; font-weight: 700; color: var(--ink-dim); letter-spacing: 0.08em; }
-.tl-line {
-  flex: 1;
-  height: 1px;
-  margin-top: 5px;
-  background: linear-gradient(90deg, var(--ochre), var(--ochre-l));
-  position: relative;
-}
-.tl-line::after {
-  content: '백 일';
-  position: absolute;
-  left: 50%; top: -32px;
-  transform: translateX(-50%);
-  font-size: 12.5px;
+.story-quote em { font-style: normal; font-weight: 800; color: var(--ochre); }
+.story-sig {
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: 0.34em;
-  color: var(--ochre);
-  white-space: nowrap;
+  letter-spacing: 0.2em;
+  color: var(--ink-dim);
 }
 
-/* ─── 목록형 항목(一二三) — 하루의 순서 ─────────── */
+/* ─── 목록형 항목(一二三) ───────────────────────── */
 .why-grid { display: grid; grid-template-columns: 1fr; }
 .why-item {
   padding: 38px 0;
@@ -392,102 +301,100 @@ section {
   line-height: 2.05;
   max-width: 620px;
 }
-
-/* ─── [E] 어머니 이야기 ─────────────────────────── */
-.story { background: var(--hanji-d); }
-.story-inner { max-width: 580px; margin: 0 auto; text-align: center; }
-.story-quote {
-  font-size: clamp(17px, 2.4vw, 21px);
-  color: var(--ink-mid);
-  line-height: 2.25;
-  margin-bottom: 38px;
-}
-.story-quote em { font-style: normal; font-weight: 800; color: var(--ochre); }
-.story-sig {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--ink-dim);
-}
-
-/* ─── [F] 다라니가 하는 일 ──────────────────────── */
-.promise { text-align: center; }
-.promise .label { margin-bottom: 34px; }
-.promise-big {
-  font-size: clamp(21px, 3.4vw, 32px);
-  font-weight: 800;
-  line-height: 1.85;
-  color: var(--ink);
-  max-width: 640px;
-  margin: 0 auto 18px;
-}
-.promise-sub {
-  font-size: clamp(17px, 2.4vw, 22px);
-  font-weight: 700;
-  color: var(--ochre);
-  margin-bottom: 40px;
-}
-.promise-fine {
+.fine {
+  margin-top: 36px;
   font-size: 13px;
   color: var(--ink-dim);
   letter-spacing: 0.03em;
   line-height: 1.9;
 }
 
-/* ─── [G-2] 값 — 가격·안심·비교 기준 ────────────── */
-.price-box {
-  max-width: 580px;
-  border: 1px solid var(--line);
-  background: rgba(255,255,255,0.42);
-  padding: clamp(30px, 5vw, 46px);
+/* ─── 송년 기도 — 한 해의 끝, 다시 밤 ───────────── */
+.season {
+  background:
+    radial-gradient(90% 70% at 12% 18%, rgba(224,152,64,0.13), transparent 60%),
+    linear-gradient(180deg, #1C1510 0%, #16110C 100%);
+  color: var(--cream);
+  overflow: hidden;
 }
-.price-main {
-  font-size: clamp(24px, 3.6vw, 34px);
+.season .wrap { z-index: 2; }
+.season-mark {
+  right: -2vw;
+  transform: translateY(-50%);
+  font-size: clamp(220px, 28vw, 400px);
+  color: rgba(233, 182, 104, 0.05);
+}
+.season .label { color: var(--amber); }
+.season-title {
+  font-size: clamp(30px, 5.6vw, 54px);
   font-weight: 800;
-  color: var(--ink);
-  line-height: 1.4;
-  margin-bottom: 4px;
+  line-height: 1.3;
+  color: var(--cream);
+  margin-bottom: 10px;
 }
-.price-main strong { color: var(--ochre); }
-.price-day {
-  font-size: 15px;
+.season-sub {
+  font-size: clamp(17px, 2.4vw, 22px);
   font-weight: 700;
-  color: var(--ink-dim);
-  letter-spacing: 0.04em;
-  margin-bottom: 26px;
+  color: var(--amber);
+  margin-bottom: 30px;
 }
-.price-assure {
-  list-style: none;
-  border-top: 1px solid var(--line);
-  padding-top: 22px;
-  margin-bottom: 24px;
-}
-.price-assure li {
-  font-size: clamp(15px, 1.9vw, 17.5px);
-  font-weight: 700;
-  color: var(--ink-mid);
+.season-body {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--amber-dim);
   line-height: 2.1;
-  padding-left: 22px;
+  max-width: 520px;
+}
+.season-note {
+  margin-top: 46px;
+  padding-left: 16px;
+  border-left: 2px solid var(--amber);
+  font-size: clamp(15px, 1.9vw, 17px);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.9;
+}
+
+/* 기간 막대 */
+.tl {
+  display: flex;
+  align-items: flex-start;
+  max-width: 620px;
+  margin-top: 56px;
+}
+.tl-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 96px;
+}
+.tl-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 5px rgba(217,164,91,0.16);
+}
+.tl-node strong { font-size: 15px; font-weight: 800; letter-spacing: 0.03em; color: var(--cream); }
+.tl-node span   { font-size: 12.5px; font-weight: 700; letter-spacing: 0.08em; color: rgba(245,239,227,0.62); }
+.tl-line {
+  flex: 1;
+  height: 1px;
+  margin-top: 5px;
+  background: linear-gradient(90deg, var(--amber), rgba(217,164,91,0.45));
   position: relative;
 }
-.price-assure li::before {
-  content: '·';
+.tl-line::after {
+  content: attr(data-label);
   position: absolute;
-  left: 6px;
-  color: var(--ochre);
-  font-weight: 800;
+  left: 50%; top: -32px;
+  transform: translateX(-50%);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--amber);
+  white-space: nowrap;
 }
-.price-anchor {
-  font-size: 13.5px;
-  color: var(--ink-dim);
-  line-height: 2;
-  letter-spacing: 0.02em;
-  border-top: 1px solid var(--line);
-  padding-top: 22px;
-}
-.price-anchor strong { color: var(--ochre); font-weight: 700; }
 
-/* ─── [H] 최종 CTA ──────────────────────────────── */
+/* ─── 최종 CTA ──────────────────────────────────── */
 .final { text-align: center; }
 .final-title {
   font-size: clamp(26px, 5vw, 46px);
@@ -598,7 +505,8 @@ footer {
 
 /* ─── MOBILE ────────────────────────────────────── */
 @media (max-width: 600px) {
-  nav { padding: 16px 24px; }
+  :root { --nav-h: 70px; }
+  nav { padding: 0 24px; }
   .nav-cta { display: none; }
   .hero-cta { flex-direction: column; width: 100%; }
   .btn { width: 100%; justify-content: center; }
@@ -612,56 +520,37 @@ footer {
 
 <div class="hanja-bg" aria-hidden="true">心</div>
 
-<!-- ═══ [A] D-DAY 스트립 — 날짜에 맞춰 자동 갱신, 수능 뒤엔 자동 숨김 ═══ -->
-<div class="dday-strip" id="dday-strip">
-  <a href="#prayer">
-    <span class="dday-l1" id="dday-l1">2026년 8월 11일, 수능 D-100</span>
-    <span class="dday-l2" id="dday-l2">백일 마음기도가 시작됩니다 →</span>
-  </a>
-</div>
-
 <nav id="nav">
   <a href="#" class="nav-logo">
     <span class="nav-logo-main">다라니</span>
     <span class="nav-logo-sub">— 불교 수행 &amp; 마음공부 도반(道伴)</span>
   </a>
-  <a href="#prayer" class="nav-cta">수능 백일기도 →</a>
+  <a href="#download" class="nav-cta">앱 받기 →</a>
 </nav>
 
-<!-- ═══ [B] HERO — 밤 ═══
-     11/20 이후 통년판 원복 시:
-     eyebrow 삭제 / 제목 "마음이 무거울 때, <em>경전에 기대어</em>" /
-     hero-clarify 삭제 /
-     본문 "절에 가기 어려운 날에도, 언제 어디서나 불교의 가르침으로 마음을 다스려 보세요." /
-     hero-note 삭제, 스트립 삭제 -->
+<!-- ═══ HERO — 밤 ═══ -->
 <section class="hero" id="top">
   <div class="orb orb-1" aria-hidden="true"></div>
   <div class="orb orb-2" aria-hidden="true"></div>
-  <div class="hero-baek" aria-hidden="true">百</div>
+  <div class="mark hero-mark" aria-hidden="true">法</div>
 
   <div class="wrap">
-    <img src="https://dharani-landing-tlxw.vercel.app/icon.png" alt="다라니 앱 아이콘"
+    <!-- icon.png 가 저장소 맨 위(index.html 옆)에 있어야 보인다. 없으면 자동으로 숨는다 -->
+    <img src="/icon.png" alt="다라니 앱 아이콘"
          class="hero-icon rise" style="--d:.1s" onerror="this.style.display='none'">
 
-    <p class="hero-eyebrow rise" style="--d:.25s">수능 백일 마음기도</p>
-
-    <h1 class="hero-title rise" style="--d:.4s">
-      수능을 준비하는 건<br>
-      <em>아이만이 아닙니다</em>
+    <h1 class="hero-title rise" style="--d:.3s">
+      마음이 무거울 때,<br>
+      <em>경전에 기대어</em>
     </h1>
 
-    <p class="hero-clarify rise" style="--d:.55s">
-      아이가 쓰는 앱이 아닙니다.<br>
-      <em>부모가 쓰는 앱</em>입니다.
+    <p class="hero-body rise" style="--d:.5s">
+      절에 가기 어려운 날에도,<br>
+      언제 어디서나 불교의 가르침으로<br>
+      마음을 다스려 보세요.
     </p>
 
-    <p class="hero-body rise" style="--d:.7s">
-      수능 D-100부터 수능일까지 백 일.<br>
-      매일 아침 한 문장으로,<br>
-      부모의 마음을 함께 걷습니다.
-    </p>
-
-    <div class="hero-cta rise" style="--d:.85s">
+    <div class="hero-cta rise" style="--d:.7s">
       <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EB%9D%BC%EB%8B%88-ai-%EB%B6%88%EA%B5%90-%EC%88%98%ED%96%89-%EB%A7%88%EC%9D%8C%EA%B3%B5%EB%B6%80-%EC%B1%97-%EB%B2%97/id6760872720" class="btn btn-cream" target="_blank" rel="noopener noreferrer">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         App Store
@@ -671,79 +560,10 @@ footer {
         Google Play
       </a>
     </div>
-
-    <p class="hero-note rise" style="--d:1s">첫 7일 무료 · 이후 19,900원 · 자동 결제 없음 · 백 일 뒤 종료</p>
   </div>
 </section>
 
-<!-- ═══ 수능 시즌 섹션 [C][D] — 11/20 이후 이 블록 제거 ═══ -->
-
-<!-- [C] 백일기도란 — 새벽, 한지가 시작된다 -->
-<section id="prayer">
-  <div class="wrap">
-    <p class="label reveal">수능 백일기도</p>
-    <h2 class="sec-title reveal">백일기도란</h2>
-    <div class="prose">
-      <p class="reveal">백 일 동안 <em>한 가지 마음</em>을 이어서 기도하는 것.<br>불교에서 오래 이어져 온 수행 방식입니다.</p>
-      <p class="reveal">수능을 앞두고는 100일 전부터 시작합니다.<br>2027학년도 수능은 <em>11월 19일</em>, 100일 전은 <em>8월 11일</em>입니다.</p>
-      <p class="reveal">절에 접수를 하고 나면, 부모는 그 백 일 동안 무엇을 할까요.<br>매일 절에 갈 수 있는 분은 많지 않습니다.</p>
-    </div>
-
-    <div class="tl reveal" aria-label="8월 11일부터 11월 19일 수능일까지 백 일">
-      <div class="tl-node">
-        <span class="tl-dot" aria-hidden="true"></span>
-        <strong>8월 11일</strong>
-        <span>시작 · D-100</span>
-      </div>
-      <div class="tl-line" aria-hidden="true"></div>
-      <div class="tl-node">
-        <span class="tl-dot" aria-hidden="true"></span>
-        <strong>11월 19일</strong>
-        <span>수능일</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- [D] 백 일 동안, 매일 — 하루의 순서대로 -->
-<section id="daily">
-  <div class="wrap">
-    <p class="label reveal">백 일 동안, 매일</p>
-    <div class="why-grid">
-
-      <div class="why-item reveal">
-        <span class="why-num">一</span>
-        <div class="why-text">
-          <h3>아침 7시, 그날의 마음 문구</h3>
-          <p>매일 아침 한 문장이 도착합니다. 백 일치를 모두 미리 써두었습니다.</p>
-        </div>
-      </div>
-
-      <div class="why-item reveal">
-        <span class="why-num">二</span>
-        <div class="why-text">
-          <h3>마음이 무거운 날에는, 대화</h3>
-          <p>털어놓을 수 있습니다. 경전에 근거해 답하고, 그 근거를 함께 보여드립니다.</p>
-        </div>
-      </div>
-
-      <div class="why-item reveal">
-        <span class="why-num">三</span>
-        <div class="why-text">
-          <h3>하루가 끝나면, 기록</h3>
-          <p>걸어온 날들이 수행 기록과 마음 기록으로 남습니다. 오늘이 며칠째인지가 매일 쌓입니다.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 수능 시즌 섹션 끝 ═══ -->
-
-<!-- [E] 어머니 이야기 — 숏폼 ①과 같은 이야기 -->
+<!-- ═══ 어머니 이야기 — 숏폼 ①과 같은 이야기 ═══ -->
 <section class="story" id="story">
   <div class="story-inner">
     <p class="story-quote reveal">
@@ -761,19 +581,7 @@ footer {
   </div>
 </section>
 
-<!-- [F] 다라니가 하는 일 — 11/20 이후 이 섹션 제거 -->
-<section class="promise" id="promise">
-  <div class="wrap">
-    <p class="label reveal">다라니가 하는 일</p>
-    <p class="promise-big reveal">백 일 동안,<br>부모의 마음이 혼자 있지 않게 하는 것.</p>
-    <p class="promise-sub reveal">아이를 대신해 줄 수는 없지만, 부모의 마음은 돌볼 수 있습니다.</p>
-    <p class="promise-fine reveal">다라니의 답은 경전 자료에 근거해 AI가 만듭니다.<br>기도의 결과를 약속하지 않으며, 스님이나 전문 상담을 대신하지 않습니다.</p>
-  </div>
-</section>
-
-<div class="rule"></div>
-
-<!-- [G] 다라니가 필요한 이유 -->
+<!-- ═══ 다라니가 필요한 이유 ═══ -->
 <section id="app">
   <div class="wrap">
     <p class="label reveal">다라니가 필요한 이유</p>
@@ -782,65 +590,74 @@ footer {
       <div class="why-item reveal">
         <span class="why-num">一</span>
         <div class="why-text">
-          <h3>경전에 근거해 답합니다</h3>
-          <!-- 코퍼스에 성철·법정 스님 법문 수록이 확인되면:
-               "《법구경》과 성철·법정 스님의 가르침에 근거해 답하고, 그 출처를 함께 보여드립니다." 로 복원 -->
-          <p>일반적인 위로가 아니라, 경전과 법문에 근거해 답하고 그 출처를 함께 보여드립니다.</p>
+          <h3>경전 해설을 들려드립니다</h3>
+          <!-- 반야심경·금강경 등 다른 해설이 열리면 "법구경을" → "법구경부터" 로 -->
+          <p>법구경을 처음부터 차례로, 한 편에 5분 안팎의 해설로 들려드립니다. 마음에 닿는 문장은 꾹 눌러 염주에 꿰어 둘 수 있습니다.</p>
         </div>
       </div>
 
       <div class="why-item reveal">
         <span class="why-num">二</span>
         <div class="why-text">
-          <h3>수행 기록이 쌓입니다</h3>
-          <p>매일의 마음공부가 캘린더에 남습니다. 지나고 나서, 내 마음이 어떻게 달라졌는지 돌아볼 수 있습니다.</p>
+          <h3>경전에 근거해 답합니다</h3>
+          <!-- 코퍼스에 성철·법정 스님 법문 수록이 확인되면:
+               "《법구경》과 성철·법정 스님의 가르침에 근거해 답하고, 그 출처를 함께 보여드립니다." 로 복원 -->
+          <p>잠 못 드는 새벽에도 털어놓을 수 있습니다. 일반적인 위로가 아니라, 경전과 법문에 근거해 답하고 그 출처를 함께 보여드립니다.</p>
         </div>
       </div>
 
       <div class="why-item reveal">
         <span class="why-num">三</span>
         <div class="why-text">
-          <h3>새벽에도 열려 있습니다</h3>
-          <p>절에 가기 어려운 날에도, 밤에 마음이 무너지는 날에도. 다라니는 늘 같은 자리에 있습니다.</p>
+          <h3>수행 기록이 쌓입니다</h3>
+          <p>매일의 마음공부가 캘린더에 남습니다. 지나고 나서, 내 마음이 어떻게 달라졌는지 돌아볼 수 있습니다.</p>
         </div>
       </div>
 
     </div>
+    <p class="fine reveal">다라니의 답은 경전 자료에 근거해 AI가 만듭니다.<br>기도의 결과를 약속하지 않으며, 스님이나 전문 상담을 대신하지 않습니다.</p>
   </div>
 </section>
 
-<div class="rule"></div>
-
-<!-- [G-2] 값 — 11/20 이후 이 섹션 제거 -->
-<section id="price">
+<!-- ═══ 송년 기도 — 아래 스크립트가 날짜(KST)에 맞춰 문구를 바꾸고,
+     신청이 끝나는 2027-01-01부터 이 섹션을 스스로 숨긴다. 1월에 블록째 지워도 된다 ═══ -->
+<section class="season" id="yearend">
+  <div class="mark season-mark" aria-hidden="true">年</div>
   <div class="wrap">
-    <p class="label reveal">값</p>
-    <div class="price-box reveal">
-      <p class="price-main">백 일에 <strong>19,900원</strong></p>
-      <p class="price-day">하루 199원</p>
+    <p class="label reveal" id="ye-kicker">함께하는 기도 · 11월 20일 시작</p>
+    <h2 class="season-title reveal">송년 기도</h2>
+    <p class="season-sub reveal">한 해를 마무리하는 마흔두 날</p>
+    <p class="season-body reveal" id="ye-body">
+      11월 20일부터 12월 31일까지,<br>
+      마흔두 날 동안 한 해를 돌아보며<br>
+      함께 기도합니다.
+    </p>
 
-      <ul class="price-assure">
-        <li>첫 7일은 무료로 써보고 결정합니다</li>
-        <li>자동 결제가 없습니다</li>
-        <li>백 일이 지나면 그대로 끝납니다</li>
-      </ul>
-
-      <p class="price-anchor">
-        절에서 하는 백일기도의 동참금은 보통 <strong>십만 원 안팎</strong>입니다.<br>
-        다라니는 그 자리를 대신하지 않습니다.
-        절에 가지 못하는 날을 함께 걷는 쪽입니다.
-      </p>
+    <div class="tl reveal" role="img" aria-label="11월 20일부터 12월 31일까지 마흔두 날">
+      <div class="tl-node">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <strong>11월 20일</strong>
+        <span>시작</span>
+      </div>
+      <div class="tl-line" data-label="마흔두 날" aria-hidden="true"></div>
+      <div class="tl-node">
+        <span class="tl-dot" aria-hidden="true"></span>
+        <strong>12월 31일</strong>
+        <span>한 해의 마지막 날</span>
+      </div>
     </div>
+
+    <p class="season-note reveal" id="ye-note">참가 신청은 11월 18일부터 앱에서 받습니다.</p>
   </div>
 </section>
 
-<!-- [H] 최종 CTA -->
+<!-- ═══ 최종 CTA ═══ -->
 <section class="final" id="download">
   <div class="wrap">
     <h2 class="final-title reveal">
       오늘, 마음에<br>연등 하나 밝혀보세요.
     </h2>
-    <p class="final-sub reveal">수능 백일 마음기도 · 첫 7일 무료 · 자동 결제 없음</p>
+    <p class="final-sub reveal">경전 해설 · 마음 대화 · 수행 일지</p>
 
     <div class="store-stack reveal">
       <a href="https://apps.apple.com/kr/app/%EB%8B%A4%EB%9D%BC%EB%8B%88-ai-%EB%B6%88%EA%B5%90-%EC%88%98%ED%96%89-%EB%A7%88%EC%9D%8C%EA%B3%B5%EB%B6%80-%EC%B1%97-%EB%B2%97/id6760872720" class="store-btn" target="_blank" rel="noopener noreferrer">
@@ -866,7 +683,7 @@ footer {
   </div>
 </section>
 
-<!-- [I] FOOTER -->
+<!-- FOOTER -->
 <footer>
   <p class="legal">
     <a href="https://sites.google.com/view/dharani-test" target="_blank" rel="noopener noreferrer">개인정보처리방침</a>
@@ -948,29 +765,32 @@ footer {
   });
 })();
 
-/* D-day 스트립 — KST 기준으로 시즌 전·중·수능일·이후를 자동 전환 */
+/* ─── 송년 기도 — KST 날짜에 맞춰 안내를 바꾼다 ────
+   ~11/17  "참가 신청은 11월 18일부터"   (HTML에 적힌 그대로)
+   11/18~  "지금 참가 신청을 받고 있습니다"
+   11/20~  "2026년이 N일 남았습니다" + "오늘부터 12월 31일까지"
+   1/1~    섹션 숨김 (앱도 1/1부터 신청을 닫는다)
+   일정이 바뀌면 아래 세 날짜만 고친다 — 앱 서버의 값과 같아야 한다
+   (server/lib/yearEndSeason.ts S2_SEASON_START·S2_SEASON_END, routes.ts YEAREND_PURCHASE_OPENS) */
 (function () {
-  var l1 = document.getElementById('dday-l1');
-  var l2 = document.getElementById('dday-l2');
-  var strip = document.getElementById('dday-strip');
-  if (!l1 || !l2 || !strip) return;
-  var now = new Date();
-  var kst = new Date(now.getTime() + (now.getTimezoneOffset() + 540) * 60000);
-  var today = new Date(kst.getFullYear(), kst.getMonth(), kst.getDate());
-  var start = new Date(2026, 7, 11);   // 2026-08-11
-  var exam  = new Date(2026, 10, 19);  // 2026-11-19
-  var d = Math.round((exam - today) / 86400000);
-  if (today < start) {
-    l1.textContent = '2026년 8월 11일, 수능 D-100';
-    l2.textContent = '백일 마음기도가 시작됩니다 →';
-  } else if (d > 0) {
-    l1.textContent = '2026년 수능 D-' + d;
-    l2.textContent = '백일 마음기도가 이어지고 있습니다 →';
-  } else if (d === 0) {
-    l1.textContent = '2026년 11월 19일, 수능일';
-    l2.textContent = '백 일의 마지막까지 함께합니다';
-  } else {
-    strip.style.display = 'none';
+  var OPENS = '2026-11-18', START = '2026-11-20', END = '2026-12-31';
+  var sec = document.getElementById('yearend');
+  var kicker = document.getElementById('ye-kicker');
+  var body = document.getElementById('ye-body');
+  var note = document.getElementById('ye-note');
+  if (!sec || !kicker || !body || !note) return;
+  var today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+  if (today > END) {
+    sec.style.display = 'none';
+    return;
+  }
+  if (today >= START) {
+    var left = Math.round((Date.parse(END) - Date.parse(today)) / 86400000) + 1;
+    kicker.textContent = '2026년이 ' + left + '일 남았습니다';
+    body.innerHTML = '오늘부터 12월 31일까지,<br>한 해를 돌아보며<br>함께 기도합니다.';
+    note.textContent = '지금 앱에서 참가하실 수 있습니다.';
+  } else if (today >= OPENS) {
+    note.textContent = '지금 앱에서 참가 신청을 받고 있습니다.';
   }
 })();
 </script>
