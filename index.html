@@ -400,13 +400,19 @@ footer a{color:var(--ink3)}
 
 /* ─── 유입 추적 (지금 랜딩과 같다) ───────────────
    ①방문 채널(ref/campaign)을 읽고 ②구글 플레이 링크에 referrer로 실어 보낸다 ③스토어 단추 누름을 이벤트로 남긴다
-   예) /?ref=youtube&campaign=shorts1 */
+   예) /?ref=youtube&campaign=shorts1
+   채널 경로: /yt /ig /th /ad /k 로 들어오면 ref가 없어도 채널을 안다 (vercel.json이 같은 화면을 보여 준다)
+   예) /yt?campaign=longform  →  ref=youtube, campaign=longform
+   Vercel 무료 플랜은 UTM 탭이 잠겨 있어서, Analytics의 Pages 탭에서 경로별 방문자로 채널을 나눠 본다 */
 (function () {
-  var q, ref, campaign;
+  var PATHS = { yt: 'youtube', ig: 'instagram', th: 'threads', ad: 'ads', k: 'kakao' };
+  var q, ref, campaign, seg, ch;
   try {
     q = new URLSearchParams(window.location.search);
-    ref = (q.get('ref') || 'direct').slice(0, 40);
-    campaign = (q.get('campaign') || 'none').slice(0, 60);
+    seg = (window.location.pathname || '/').replace(/^\/+|\/+$/g, '').toLowerCase();
+    ch = Object.prototype.hasOwnProperty.call(PATHS, seg) ? PATHS[seg] : '';
+    ref = (q.get('ref') || ch || 'direct').slice(0, 40);
+    campaign = (q.get('campaign') || (ch ? seg : 'none')).slice(0, 60);
   } catch (e) { ref = 'direct'; campaign = 'none'; }
   var utm = 'utm_source=' + ref + '&utm_medium=landing&utm_campaign=' + campaign;
   var links = document.querySelectorAll('a[href*="play.google.com"], a[href*="apps.apple.com"]');

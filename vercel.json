@@ -1,0 +1,10 @@
+{
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/yt", "destination": "/index.html" },
+    { "source": "/ig", "destination": "/index.html" },
+    { "source": "/th", "destination": "/index.html" },
+    { "source": "/ad", "destination": "/index.html" },
+    { "source": "/k", "destination": "/index.html" }
+  ]
+}
